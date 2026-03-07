@@ -1,6 +1,7 @@
-from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi import Request, Response
 import time
+
+from fastapi import Request, Response
+from starlette.middleware.base import BaseHTTPMiddleware
 
 
 class UsageTrackingMiddleware(BaseHTTPMiddleware):

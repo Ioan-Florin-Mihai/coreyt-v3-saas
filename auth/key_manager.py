@@ -1,6 +1,6 @@
-import secrets
 import hashlib
 import hmac
+import secrets
 
 
 class ApiKeyManager:
@@ -26,8 +26,8 @@ class ApiKeyManager:
     def extract_prefix(key: str) -> str:
         """Extract prefix for fast lookup."""
         try:
-            return key.split("_")[1][:ApiKeyManager.DISPLAY_PREFIX_LENGTH]
-        except:
+            return key.split("_")[1][: ApiKeyManager.DISPLAY_PREFIX_LENGTH]
+        except IndexError:
             return ""
 
     @staticmethod

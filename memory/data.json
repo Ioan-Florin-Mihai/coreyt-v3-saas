@@ -14,5 +14,15 @@
       "role": "assistant",
       "content": "Coreyt Online \u2713\n\nAm primit mesajul t\u0103u:\nSalut Coreyt! Esti online?\n\nStatus sistem:\n\n\u2022 API Keys: active\n\u2022 Database: connected\n\u2022 Auth: operational\n\u2022 Mode: TEST MODE\n"
     }
+  ],
+  "test-user-1": [
+    {
+      "role": "user",
+      "content": "Salut Coreyt!"
+    },
+    {
+      "role": "assistant",
+      "content": "Coreyt Online \u2713\n\nAm primit mesajul t\u0103u:\nSalut Coreyt!\n\nStatus sistem:\n\n\u2022 API Keys: active\n\u2022 Database: connected\n\u2022 Auth: operational\n\u2022 Mode: TEST MODE\n"
+    }
   ]
 }

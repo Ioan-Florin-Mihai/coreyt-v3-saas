@@ -1,8 +1,18 @@
-from sqlalchemy import Column, String, DateTime, Boolean, Integer, ForeignKey, BigInteger, JSON
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import declarative_base, relationship
 import uuid
 from datetime import datetime
+
+from sqlalchemy import (
+    JSON,
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+)
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
@@ -35,9 +45,7 @@ class User(Base):
     name = Column(String(255), nullable=False)
 
     organization_id = Column(
-        UUID(as_uuid=True),
-        ForeignKey("organizations.id"),
-        nullable=False
+        UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False
     )
 
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
@@ -51,9 +59,7 @@ class User(Base):
     organization = relationship("Organization", back_populates="users")
 
     api_keys = relationship(
-        "ApiKey",
-        back_populates="user",
-        cascade="all, delete-orphan"
+        "ApiKey", back_populates="user", cascade="all, delete-orphan"
     )
 
 
@@ -63,9 +69,7 @@ class ApiKey(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     user_id = Column(
-        UUID(as_uuid=True),
-        ForeignKey("users.id", ondelete="CASCADE"),
-        nullable=False
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
 
     key_hash = Column(String(64), nullable=False, unique=True)
@@ -94,22 +98,12 @@ class UsageLog(Base):
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
 
-    api_key_id = Column(
-        UUID(as_uuid=True),
-        ForeignKey("api_keys.id"),
-        nullable=False
-    )
+    api_key_id = Column(UUID(as_uuid=True), ForeignKey("api_keys.id"), nullable=False)
 
-    user_id = Column(
-        UUID(as_uuid=True),
-        ForeignKey("users.id"),
-        nullable=False
-    )
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
 
     organization_id = Column(
-        UUID(as_uuid=True),
-        ForeignKey("organizations.id"),
-        nullable=False
+        UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False
     )
 
     endpoint = Column(String(255), nullable=False)

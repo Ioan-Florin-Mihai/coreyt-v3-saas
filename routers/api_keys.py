@@ -1,17 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from datetime import datetime
 import uuid
+from datetime import datetime
 
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from auth.key_manager import ApiKeyManager
 from database.models import ApiKey
 from database.session import get_db
-from auth.key_manager import ApiKeyManager
 
-router = APIRouter(
-    prefix="/api/users/keys",
-    tags=["api-keys"]
-)
+router = APIRouter(prefix="/api/users/keys", tags=["api-keys"])
 
 
 class ApiKeyCreate(BaseModel):
@@ -47,7 +45,7 @@ def create_api_key(body: ApiKeyCreate, db: Session = Depends(get_db)):
         name=body.name,
         created_at=datetime.utcnow(),
         is_active=True,
-        is_revoked=False
+        is_revoked=False,
     )
 
     db.add(db_key)
@@ -60,7 +58,7 @@ def create_api_key(body: ApiKeyCreate, db: Session = Depends(get_db)):
         name=db_key.name,
         key_prefix=db_key.key_prefix,
         created_at=db_key.created_at,
-        is_active=db_key.is_active
+        is_active=db_key.is_active,
     )
 
 
@@ -75,7 +73,7 @@ def list_api_keys(db: Session = Depends(get_db)):
             name=k.name,
             key_prefix=k.key_prefix,
             created_at=k.created_at,
-            is_active=k.is_active
+            is_active=k.is_active,
         )
         for k in keys
     ]
